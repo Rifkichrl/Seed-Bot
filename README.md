@@ -9,4 +9,4 @@ cd Seed-Bot.git
 
 nano data.txt
 
-python3.10 main.py
+python3.10 seed.py
