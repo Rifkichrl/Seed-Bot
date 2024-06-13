@@ -1,5 +1,4 @@
 import requests
-import json
 import time
 
 # Function to make requests
@@ -10,12 +9,27 @@ def coday(url, headers):
         response = requests.get(url, headers=headers)
     return response.json()
 
+# Banner ASCII Art
+def print_banner():
+    banner = """
+  _________                 .___ __________        __    ___.           __________.__  _____ __   .__ 
+ /   _____/ ____   ____   __| _/ \______   \ _____/  |_  \_ |__ ___.__. \______   \__|/ ____\  | _|__|
+ \_____  \_/ __ \_/ __ \ / __ |   |    |  _//  _ \   __\  | __ <   |  |  |       _/  \   __\|  |/ /  |
+ /        \  ___/\  ___// /_/ |   |    |   (  <_> )  |    | \_\ \___  |  |    |   \  ||  |  |    <|  |
+/_______  /\___  >\___  >____ |   |______  /\____/|__|    |___  / ____|  |____|_  /__||__|  |__|_ \__|
+        \/     \/     \/     \/          \/                   \/\/              \/               \/   
+    """
+    print(f"\033[1m\033[34m{banner}\033[0m")  # Bold and blue text
+
+# Print banner at the start
+print_banner()
+
 # Read tokens from file
 with open('data.txt', 'r') as file:
     tokens = [line.strip() for line in file if line.strip()]
 
-# Initial interval in seconds
-intervals = [30 * 60, 60 * 60, 2 * 60 * 60, 3 * 60 * 60]
+# Define intervals in seconds
+intervals = [15 * 60, 30 * 60]
 interval_index = 0
 
 while True:
@@ -48,8 +62,10 @@ while True:
         except Exception as e:
             print(f"\033[31m[{date}] Account {acc}: Error occurred: {e} \033[0m")
 
-    print(f"\033[34m====[Wait {intervals[interval_index] / 60:.0f} minutes]====\033[0m")
+    # Print wait message and wait for the next interval
+    wait_time_minutes = intervals[interval_index] / 60
+    print(f"\033[34m====[Wait {wait_time_minutes} minutes]====\033[0m")
     time.sleep(intervals[interval_index])
 
-    # Update the interval index
+    # Update the interval index for alternating between 15 and 30 minutes
     interval_index = (interval_index + 1) % len(intervals)
