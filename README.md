@@ -15,4 +15,4 @@ run
 
   `nano data.txt`
 
-  `python3.10 seed.py`
+  `python3.10 main.py`
